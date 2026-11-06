@@ -72,4 +72,22 @@ class User extends Account implements IdentityInterface
         // Gunakan security component untuk memverifikasi hash Bcrypt
         return Yii::$app->security->validatePassword($password, $this->password);
     }
+
+    /**
+     * Cek apakah role saat ini adalah Admin
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return strtolower($this->role) === 'admin';
+    }
+
+    /**
+     * Cek apakah role saat ini adalah Author
+     * @return bool
+     */
+    public function isAuthor()
+    {
+        return strtolower($this->role) === 'author';
+    }
 }
