@@ -236,19 +236,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'tableOptions' => ['class' => 'table table-modern', 'style' => 'margin-bottom: 0;'],
-            'layout' => "{items}\n<div class='panel-footer' style='background: #fff; padding: 14px 20px; border-top: 1px solid #e2e8f0;'><div class='row' style='display: flex; align-items: center;'><div class='col-sm-6 text-muted' style='font-size: 13px;'>{summary}</div><div class='col-sm-6 text-right'>{pager}</div></div></div>",
+            'layout' => "<div class='table-responsive' style='margin-bottom: 0;'>{items}</div>\n<div class='panel-footer' style='background: #fff; padding: 14px 20px; border-top: 1px solid #e2e8f0;'><div class='row' style='display: flex; align-items: center;'><div class='col-sm-6 text-muted' style='font-size: 13px;'>{summary}</div><div class='col-sm-6 text-right'>{pager}</div></div></div>",
             'emptyText' => '<div class="text-center" style="padding: 50px 20px;"><div style="font-size: 42px; color: #cbd5e1; margin-bottom: 12px;"><i class="fa-solid fa-inbox"></i></div><h4 style="color: #64748b; font-weight: 600;">Tidak ada artikel pada kategori ini</h4><p class="text-muted" style="font-size: 13px;">Belum ada artikel yang sesuai dengan filter status yang dipilih.</p></div>',
             'columns' => [
                 [
                     'class' => 'yii\grid\SerialColumn',
                     'header' => '#',
-                    'headerOptions' => ['style' => 'width: 45px; text-align: center;'],
-                    'contentOptions' => ['style' => 'text-align: center; color: #94a3b8; font-weight: 600;'],
+                    'headerOptions' => ['style' => 'width: 45px; text-align: center; vertical-align: middle;'],
+                    'contentOptions' => ['style' => 'text-align: center; vertical-align: middle; color: #94a3b8; font-weight: 600;'],
                 ],
                 [
                     'attribute' => 'title',
                     'label' => 'Judul Artikel',
                     'format' => 'raw',
+                    'headerOptions' => ['style' => 'vertical-align: middle;'],
+                    'contentOptions' => ['style' => 'vertical-align: middle;'],
                     'value' => function ($model) {
                         $html = '<div style="margin-bottom: 4px;">'
                             . Html::a(Html::encode($model->title), ['view', 'id' => $model->idpost], [
@@ -279,8 +281,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'status',
                     'label' => 'Status',
                     'format' => 'raw',
-                    'headerOptions' => ['style' => 'width: 150px; text-align: center;'],
-                    'contentOptions' => ['style' => 'text-align: center;'],
+                    'headerOptions' => ['style' => 'width: 150px; text-align: center; vertical-align: middle; white-space: nowrap;'],
+                    'contentOptions' => ['style' => 'text-align: center; vertical-align: middle; white-space: nowrap;'],
                     'value' => function ($model) {
                         return $model->getStatusBadge();
                     },
@@ -288,8 +290,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'header' => 'Aksi',
-                    'headerOptions' => ['style' => 'width: 250px; text-align: center;'],
-                    'contentOptions' => ['style' => 'text-align: center;'],
+                    'headerOptions' => ['style' => 'width: 320px; min-width: 320px; text-align: center; vertical-align: middle; white-space: nowrap;'],
+                    'contentOptions' => ['style' => 'text-align: center; vertical-align: middle; white-space: nowrap; padding: 12px 10px;'],
                     'template' => '{custom_actions}',
                     'buttons' => [
                         'custom_actions' => function ($url, $model, $key) use ($isAdmin, $user) {
@@ -302,7 +304,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     '<i class="fa-solid fa-check"></i> Setujui',
                                     ['approve', 'id' => $model->idpost],
                                     [
-                                        'class' => 'btn btn-xs btn-success',
+                                        'class' => 'btn btn-action-custom btn-success',
                                         'title' => 'Setujui dan Publikasikan',
                                         'data-method' => 'post',
                                         'data-confirm' => 'Apakah Anda yakin ingin menyetujui artikel "' . Html::encode($model->title) . '" dan menerbitkannya?',
@@ -310,7 +312,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 );
 
                                 // Tombol Tolak (Reject)
-                                $buttons[] = '<button type="button" class="btn btn-xs btn-danger btn-trigger-reject" '
+                                $buttons[] = '<button type="button" class="btn btn-action-custom btn-danger btn-trigger-reject" '
                                     . 'data-id="' . $model->idpost . '" '
                                     . 'data-title="' . Html::encode($model->title) . '" '
                                     . 'title="Tolak Artikel dengan Catatan">'
@@ -324,7 +326,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     '<i class="fa-solid fa-paper-plane"></i> ' . ($isRejected ? 'Ajukan Ulang' : 'Ajukan Review'),
                                     ['submit-review', 'id' => $model->idpost],
                                     [
-                                        'class' => 'btn btn-xs btn-warning',
+                                        'class' => 'btn btn-action-custom btn-warning',
                                         'title' => 'Kirim ke Admin untuk Direview',
                                         'data-method' => 'post',
                                         'data-confirm' => 'Ajukan artikel "' . Html::encode($model->title) . '" kepada Admin untuk ditinjau?',
@@ -338,7 +340,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     '<i class="fa-solid fa-pen-to-square"></i> Edit',
                                     ['update', 'id' => $model->idpost],
                                     [
-                                        'class' => 'btn btn-xs btn-default',
+                                        'class' => 'btn btn-action-custom btn-default',
                                         'title' => 'Edit / Perbaiki Artikel'
                                     ]
                                 );
@@ -349,7 +351,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 '<i class="fa-solid fa-eye"></i> Detail',
                                 ['view', 'id' => $model->idpost],
                                 [
-                                    'class' => 'btn btn-xs btn-default',
+                                    'class' => 'btn btn-action-custom btn-default',
                                     'title' => 'Lihat Detail Artikel'
                                 ]
                             );
@@ -357,19 +359,18 @@ $this->params['breadcrumbs'][] = $this->title;
                             // Tombol Hapus
                             if ($isAdmin || ($model->username === $user->username && !$model->isPending())) {
                                 $buttons[] = Html::a(
-                                    '<i class="fa-solid fa-trash-can"></i>',
+                                    '<i class="fa-solid fa-trash-can"></i> Hapus',
                                     ['delete', 'id' => $model->idpost],
                                     [
-                                        'class' => 'btn btn-xs btn-default text-danger',
+                                        'class' => 'btn btn-action-custom btn-action-delete',
                                         'title' => 'Hapus Artikel',
-                                        'style' => 'color: #ef4444 !important;',
                                         'data-method' => 'post',
                                         'data-confirm' => 'Apakah Anda yakin ingin menghapus artikel ini?',
                                     ]
                                 );
                             }
 
-                            return '<div style="display: inline-flex; gap: 5px; justify-content: center; flex-wrap: wrap;">' . implode(' ', $buttons) . '</div>';
+                            return '<div class="action-btn-group">' . implode(' ', $buttons) . '</div>';
                         },
                     ],
                 ],

@@ -391,6 +391,68 @@ button:active,
 }
 
 /* ========================================================
+   TABLE ACTION BUTTONS & ALIGNMENT
+   ======================================================== */
+.action-btn-group {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+}
+
+.btn-action-custom {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    height: 30px !important;
+    padding: 0 11px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    text-decoration: none !important;
+    transition: all 0.15s ease-in-out !important;
+    white-space: nowrap !important;
+    line-height: 28px !important;
+    box-sizing: border-box !important;
+    border: 1px solid transparent !important;
+    cursor: pointer !important;
+}
+
+.btn-action-custom i {
+    font-size: 11.5px !important;
+}
+
+.btn-action-custom.btn-default {
+    background-color: #ffffff !important;
+    color: #475569 !important;
+    border-color: #cbd5e1 !important;
+}
+
+.btn-action-custom.btn-default:hover,
+.btn-action-custom.btn-default:focus {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    border-color: #94a3b8 !important;
+}
+
+.btn-action-delete {
+    background-color: #fff1f2 !important;
+    color: #e11d48 !important;
+    border: 1px solid #fecdd3 !important;
+}
+
+.btn-action-delete:hover,
+.btn-action-delete:focus {
+    background-color: #ffe4e6 !important;
+    color: #be123c !important;
+    border-color: #fda4af !important;
+    text-decoration: none !important;
+}
+
+/* ========================================================
    MODERN SEGMENTED TABS (NAV-PILLS)
 ======================================================== */
 .nav-pills-modern {
