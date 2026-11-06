@@ -17,7 +17,7 @@ Sesuai instruksi soal, alur publikasi artikel menerapkan aturan berikut:
      - **Tolak (Reject)** $\rightarrow$ Admin wajib mengisi **alasan penolakan / catatan revisi**, dan status berubah menjadi **`rejected`**.
 3. **Author Memperbaiki Artikel yang Ditolak**:
    - Artikel yang ditolak otomatis muncul kembali di dashboard Author dengan penanda merah dan kotak kutipan alasan penolakan dari Admin.
-   - Author dapat menekan tombol **"Perbaiki Artikel"**, membaca catatan revisi di form edit, merevisi tulisan, lalu menekan **"Simpan & Ajukan Ulang Review"** (status kembali menjadi `pending`).
+   - Author dapat menekan tombol **"Edit"**, membaca catatan revisi di form edit, merevisi tulisan, menyimpannya kembali, lalu menekan tombol **"Ajukan Review"** di dashboard (status kembali menjadi `pending`).
 4. **Pemisahan Peran Tegas (*Separation of Concerns*)**:
    - Author adalah pembuat konten (*creator*).
    - Admin bertindak murni sebagai kurator dan penerbit (*editor-in-chief*), sehingga fitur penulisan artikel untuk Admin ditiadakan demi menjaga integritas alur.
@@ -90,7 +90,7 @@ Untuk mempermudah pengujian alur bolak-balik antara Author dan Admin, silakan gu
 2. Buka menu **Artikel** $\rightarrow$ klik tab **"Ditolak"**.
 3. Perhatikan kotak merah di bawah judul artikel yang menampilkan alasan penolakan dari Admin.
 4. Klik tombol **"Edit"** atau **"Perbaiki Artikel"**. Di bagian atas formulir akan tampil kutipan catatan revisi admin.
-5. Perbaiki isi konten, lalu klik tombol **"Simpan & Ajukan Ulang Review"** $\rightarrow$ status artikel kembali menjadi **Menunggu Review** (*Pending*).
+5. Perbaiki isi konten, lalu klik tombol **"Simpan Perubahan Draft"**, kemudian pada tabel dashboard klik tombol **"Ajukan Review"** $\rightarrow$ status artikel kembali menjadi **Menunggu Review** (*Pending*).
 
 ### Skenario D: Admin Menyetujui (Approve) & Publikasi
 1. Login kembali sebagai Admin (`ADM001` / `admin123`).

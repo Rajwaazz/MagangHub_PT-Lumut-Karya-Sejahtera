@@ -28,7 +28,7 @@ $isAdmin = $user && $user->isAdmin();
                         <?= nl2br(Html::encode($model->reject_reason)) ?>
                     </div>
                     <p style="margin: 0; font-size: 13px; color: #7f1d1d;">
-                        <i class="fa-solid fa-circle-info" style="margin-right: 4px;"></i> Silakan lakukan perbaikan pada teks artikel di bawah, kemudian pilih tombol <strong>"Simpan & Ajukan Ulang Review"</strong> untuk mengirimkannya kembali ke Admin.
+                        <i class="fa-solid fa-circle-info" style="margin-right: 4px;"></i> Silakan lakukan perbaikan pada teks artikel di bawah, simpan perubahan draft, lalu tekan tombol <strong>"Ajukan Review"</strong> di Dashboard untuk mengirimkannya kembali ke Admin.
                     </p>
                 </div>
             </div>
@@ -64,54 +64,28 @@ $isAdmin = $user && $user->isAdmin();
             </div>
 
             <!-- Petunjuk Alur Publikasi Sesuai Role -->
-            <?php if ($isAdmin): ?>
-                <div style="background-color: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 8px; padding: 14px 18px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px;">
-                    <i class="fa-solid fa-shield-halved" style="color: #7c3aed; font-size: 18px;"></i>
-                    <div style="font-size: 13px; color: #5b21b6;">
-                        <strong>Otoritas Admin:</strong> Sebagai Admin/Editor Utama, Anda dapat <strong>langsung mempublikasikan artikel</strong> tanpa perlu menunggu review, atau menyimpannya sebagai draft.
-                    </div>
+            <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px;">
+                <i class="fa-solid fa-lightbulb" style="color: #f59e0b; font-size: 18px;"></i>
+                <div style="font-size: 13px; color: #475569;">
+                    <strong>Alur Publikasi Author:</strong> Artikel baru akan disimpan terlebih dahulu dengan status <strong>Draft</strong>. Setelah disimpan, Anda dapat memeriksa kembali dan menekan tombol <strong>"Ajukan Review"</strong> di Dashboard saat artikel siap ditinjau oleh Admin.
                 </div>
-            <?php else: ?>
-                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px;">
-                    <i class="fa-solid fa-lightbulb" style="color: #f59e0b; font-size: 18px;"></i>
-                    <div style="font-size: 13px; color: #475569;">
-                        <strong>Alur Author:</strong> Pilih <strong>"Simpan Draft"</strong> bila artikel belum rampung ditulis. Pilih <strong>"Simpan & Ajukan Review"</strong> agar artikel masuk ke antrean Admin untuk ditinjau dan disetujui sebelum terbit.
-                    </div>
-                </div>
-            <?php endif; ?>
+            </div>
 
             <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0 20px 0;">
 
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <?php if ($isAdmin): ?>
-                        <!-- Tombol Langsung Publikasikan untuk Admin -->
-                        <button type="submit" name="submit_action" value="publish" class="btn btn-success shadow-sm" style="font-weight: 600; padding: 10px 22px; font-size: 14px;">
-                            <i class="fa-solid fa-cloud-arrow-up" style="margin-right: 6px;"></i> Publikasikan Sekarang
-                        </button>
-
-                        <!-- Tombol Simpan Draft -->
-                        <button type="submit" name="submit_action" value="draft" class="btn btn-default" style="font-weight: 500; padding: 10px 18px; font-size: 14px;">
-                            <i class="fa-solid fa-floppy-disk" style="margin-right: 6px;"></i> Simpan sebagai Draft
-                        </button>
-                    <?php else: ?>
-                        <!-- Tombol Simpan & Ajukan Review untuk Author -->
-                        <button type="submit" name="submit_action" value="submit_review" class="btn btn-success shadow-sm" style="font-weight: 600; padding: 10px 22px; font-size: 14px;">
-                            <i class="fa-solid fa-paper-plane" style="margin-right: 6px;"></i> 
-                            <?= $model->isRejected() ? 'Simpan & Ajukan Ulang Review' : 'Simpan & Ajukan Review' ?>
-                        </button>
-
-                        <!-- Tombol Simpan Draft -->
-                        <button type="submit" name="submit_action" value="draft" class="btn btn-default" style="font-weight: 500; padding: 10px 18px; font-size: 14px;">
-                            <i class="fa-solid fa-floppy-disk" style="margin-right: 6px;"></i> Simpan sebagai Draft
-                        </button>
-                    <?php endif; ?>
+                    <!-- Tombol Tunggal Simpan sebagai Draft -->
+                    <button type="submit" class="btn btn-primary shadow-sm" style="font-weight: 600; padding: 10px 24px; font-size: 14px;">
+                        <i class="fa-solid fa-floppy-disk" style="margin-right: 6px;"></i> 
+                        <?= $model->isRejected() ? 'Simpan Perubahan Draft' : 'Simpan sebagai Draft' ?>
+                    </button>
                 </div>
 
                 <!-- Tombol Batal -->
-                <?= Html::a('<i class="fa-solid fa-arrow-left" style="margin-right: 4px;"></i> Kembali ke Dashboard', ['index'], [
-                    'class' => 'btn btn-link text-muted',
-                    'style' => 'text-decoration: none; font-size: 13.5px;'
+                <?= Html::a('<i class="fa-solid fa-arrow-left" style="margin-right: 4px;"></i> Batal & Kembali', ['index'], [
+                    'class' => 'btn btn-default',
+                    'style' => 'font-size: 13.5px; padding: 9px 18px;'
                 ]) ?>
             </div>
 

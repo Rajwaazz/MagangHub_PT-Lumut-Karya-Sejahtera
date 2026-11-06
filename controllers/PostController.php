@@ -171,21 +171,11 @@ class PostController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->date = date('Y-m-d H:i:s');
             $model->username = $user->username;
-
-            $submitAction = Yii::$app->request->post('submit_action');
-            if ($submitAction === 'submit_review') {
-                $model->status = Post::STATUS_PENDING;
-            } else {
-                $model->status = Post::STATUS_DRAFT;
-            }
+            $model->status = Post::STATUS_DRAFT;
 
             if ($model->save()) {
-                if ($model->isPending()) {
-                    Yii::$app->session->setFlash('success', 'Artikel berhasil dibuat dan langsung diajukan untuk direview oleh Admin.');
-                } else {
-                    Yii::$app->session->setFlash('info', 'Artikel berhasil disimpan sebagai Draft.');
-                }
-                return $this->redirect(['view', 'id' => $model->idpost]);
+                Yii::$app->session->setFlash('success', 'Artikel berhasil dibuat dan disimpan sebagai <strong>Draft</strong>. Silakan klik tombol <strong>"Ajukan Review"</strong> di bawah jika sudah siap ditinjau oleh Admin.');
+                return $this->redirect(['index']);
             }
         }
 
@@ -216,21 +206,11 @@ class PostController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            $submitAction = Yii::$app->request->post('submit_action');
-            if ($submitAction === 'submit_review') {
-                $model->status = Post::STATUS_PENDING;
-            } else {
-                $model->status = Post::STATUS_DRAFT;
-            }
-
+            $model->status = Post::STATUS_DRAFT;
             $model->date = date('Y-m-d H:i:s');
             if ($model->save()) {
-                if ($model->isPending()) {
-                    Yii::$app->session->setFlash('success', 'Artikel berhasil diperbarui dan telah diajukan ulang untuk direview oleh Admin.');
-                } else {
-                    Yii::$app->session->setFlash('success', 'Perubahan pada artikel berhasil disimpan sebagai Draft.');
-                }
-                return $this->redirect(['view', 'id' => $model->idpost]);
+                Yii::$app->session->setFlash('success', 'Perubahan artikel berhasil disimpan sebagai <strong>Draft</strong>. Silakan klik tombol <strong>"Ajukan Review"</strong> di bawah jika sudah siap ditinjau kembali oleh Admin.');
+                return $this->redirect(['index']);
             }
         }
 
