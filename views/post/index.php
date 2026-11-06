@@ -230,7 +230,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endif; ?>
         </ul>
     </div>
-    </div>
 
     <!-- GridView Table Card Modern -->
     <div class="panel card-modern" style="margin-top: 10px;">
@@ -248,7 +247,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'title',
-                    'label' => 'Detail Artikel',
+                    'label' => 'Judul Artikel',
                     'format' => 'raw',
                     'value' => function ($model) {
                         $html = '<div style="margin-bottom: 4px;">'
