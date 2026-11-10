@@ -280,8 +280,11 @@ class PostController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionReject($id)
+    public function actionReject($id = null)
     {
+        if (empty($id)) {
+            $id = Yii::$app->request->post('id');
+        }
         $model = $this->findModel($id);
 
         if (!$model->isPending()) {

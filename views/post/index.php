@@ -15,6 +15,8 @@ use app\models\Post;
 $isAdmin = $user->isAdmin();
 $this->title = $isAdmin ? 'Manajemen Artikel & Review' : 'Dashboard Artikel Saya';
 $this->params['breadcrumbs'][] = $this->title;
+
+\yii\bootstrap\BootstrapPluginAsset::register($this);
 ?>
 <div class="post-index">
 
@@ -382,17 +384,18 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <!-- Modal Dialog Alasan Penolakan untuk Admin -->
-<div class="modal fade" id="modalRejectPost" tabindex="-1" role="dialog" aria-labelledby="modalRejectPostLabel">
+<div class="modal fade" id="modalRejectPost" tabindex="-1" role="dialog" aria-labelledby="modalRejectPostLabel" style="z-index: 10500;">
     <div class="modal-dialog" role="document">
-        <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); overflow: hidden;">
+        <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1); overflow: hidden; margin-top: 60px;">
             <?= Html::beginForm(['reject', 'id' => 0], 'post', ['id' => 'formRejectPost']) ?>
+            <input type="hidden" name="id" id="reject_post_id" value="">
             <div class="modal-header" style="background-color: #fef2f2; border-bottom: 1px solid #fee2e2; padding: 18px 24px;">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #64748b; opacity: 0.8;"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #64748b; opacity: 0.8; font-size: 24px;"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="modalRejectPostLabel" style="font-weight: 700; color: #991b1b; display: flex; align-items: center; gap: 8px;">
                     <i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i> Tolak Publikasi Artikel
                 </h4>
             </div>
-            <div class="modal-body" style="padding: 24px;">
+            <div class="modal-body" style="padding: 24px; background-color: #ffffff;">
                 <p style="font-size: 13.5px; color: #475569; margin-bottom: 8px;">Artikel yang akan ditolak:</p>
                 <div id="rejectArticleTitle" style="font-weight: 700; font-size: 15px; color: #0f172a; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;"></div>
                 
@@ -434,13 +437,37 @@ $(document).on('click', '.btn-trigger-reject', function(e) {
     
     var formAction = '{$rejectUrlBase}'.replace('POST_ID_PLACEHOLDER', postId);
     $('#formRejectPost').attr('action', formAction);
+    $('#reject_post_id').val(postId);
     $('#rejectArticleTitle').text(postTitle);
     $('#reject_reason').val('');
     
-    $('#modalRejectPost').modal('show');
+    if (typeof $.fn.modal === 'function') {
+        $('#modalRejectPost').modal('show');
+    } else {
+        // Fallback jika bootstrap modal js belum aktif
+        $('#modalRejectPost').addClass('in').css({
+            'display': 'block',
+            'background-color': 'rgba(15, 23, 42, 0.65)',
+            'position': 'fixed',
+            'top': '0',
+            'right': '0',
+            'bottom': '0',
+            'left': '0',
+            'z-index': '99999',
+            'overflow-y': 'auto'
+        });
+    }
     setTimeout(function() {
         $('#reject_reason').focus();
     }, 450);
+});
+
+$(document).on('click', '#modalRejectPost [data-dismiss="modal"], #modalRejectPost .close', function(e) {
+    e.preventDefault();
+    if (typeof $.fn.modal === 'function') {
+        $('#modalRejectPost').modal('hide');
+    }
+    $('#modalRejectPost').removeClass('in').css('display', 'none');
 });
 JS;
 $this->registerJs($js);
