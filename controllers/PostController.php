@@ -283,7 +283,7 @@ class PostController extends Controller
     public function actionReject($id = null)
     {
         if (empty($id)) {
-            $id = Yii::$app->request->post('id');
+            $id = Yii::$app->request->post('id') ?: Yii::$app->request->get('id');
         }
         $model = $this->findModel($id);
 

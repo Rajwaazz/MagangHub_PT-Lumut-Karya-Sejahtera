@@ -32,7 +32,18 @@ html, body {
 .wrap > .container {
     padding: 85px 20px 30px;
     max-width: 1180px;
-    animation: smoothFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: smoothFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Modal Stacking Order Fix (Backdrop behind Modal) */
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+.modal {
+    z-index: 1055 !important;
+}
+.modal-dialog {
+    z-index: 1060 !important;
 }
 
 /* Top Progress Bar (NProgress-style) */

@@ -18,8 +18,6 @@ $isOwner = $user ? ($model->username === $user->username) : false;
 // Estimasi waktu baca
 $wordCount = str_word_count(strip_tags($model->content));
 $readTime = max(1, ceil($wordCount / 200));
-
-\yii\bootstrap\BootstrapPluginAsset::register($this);
 ?>
 <div class="post-view" style="max-width: 920px; margin: 0 auto;">
 
@@ -168,11 +166,15 @@ $readTime = max(1, ceil($wordCount / 200));
 
 <!-- Modal Dialog Alasan Penolakan untuk Admin -->
 <?php if ($isAdmin): ?>
-<div class="modal fade" id="modalRejectPost" tabindex="-1" role="dialog" aria-labelledby="modalRejectPostLabel" style="z-index: 10500;">
+<style>
+.modal-backdrop { z-index: 1040 !important; }
+#modalRejectPost { z-index: 1055 !important; }
+#modalRejectPost .modal-dialog { z-index: 1060 !important; position: relative; }
+</style>
+<div class="modal fade" id="modalRejectPost" tabindex="-1" role="dialog" aria-labelledby="modalRejectPostLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2); overflow: hidden; margin-top: 60px;">
             <?= Html::beginForm(['reject', 'id' => $model->idpost], 'post', ['id' => 'formRejectPost']) ?>
-            <input type="hidden" name="id" value="<?= $model->idpost ?>">
             <div class="modal-header" style="background-color: #fef2f2; border-bottom: 1px solid #fee2e2; padding: 18px 24px;">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #64748b; opacity: 0.8; font-size: 24px;"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="modalRejectPostLabel" style="font-weight: 700; color: #991b1b; display: flex; align-items: center; gap: 8px;">
@@ -217,33 +219,10 @@ $readTime = max(1, ceil($wordCount / 200));
 $js = <<<JS
 $('.btn-trigger-reject').on('click', function(e) {
     e.preventDefault();
-    if (typeof $.fn.modal === 'function') {
-        $('#modalRejectPost').modal('show');
-    } else {
-        // Fallback jika bootstrap modal js belum aktif
-        $('#modalRejectPost').addClass('in').css({
-            'display': 'block',
-            'background-color': 'rgba(15, 23, 42, 0.65)',
-            'position': 'fixed',
-            'top': '0',
-            'right': '0',
-            'bottom': '0',
-            'left': '0',
-            'z-index': '99999',
-            'overflow-y': 'auto'
-        });
-    }
+    $('#modalRejectPost').appendTo('body').modal('show');
     setTimeout(function() {
         $('#reject_reason_view').focus();
     }, 450);
-});
-
-$(document).on('click', '#modalRejectPost [data-dismiss="modal"], #modalRejectPost .close', function(e) {
-    e.preventDefault();
-    if (typeof $.fn.modal === 'function') {
-        $('#modalRejectPost').modal('hide');
-    }
-    $('#modalRejectPost').removeClass('in').css('display', 'none');
 });
 JS;
 $this->registerJs($js);
